@@ -1,47 +1,44 @@
 package wathis;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest(String testName) {
-        super(testName);
+public class AppTest {
+
+    private final PrintStream systemOut = System.out;
+
+    private ByteArrayOutputStream testOut;
+
+    @Before
+    public void setUpOutput() {
+        testOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(testOut));
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite() {
-        return new TestSuite(AppTest.class);
-    }
-
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-
+    @Test
     public void testHelloWorld() {
-        String helloWorld = "Hello World! ©Florian Le Menn  2019";
-        System.setOut(new PrintStream(outContent));
-        System.out.print(helloWorld);
-        assertEquals(helloWorld, outContent.toString());
-        System.setOut(originalOut);
+        String helloWorld = "Hello World! ©Florian Le Menn  2019\n";
+        App.main(null);
+        Assert.assertEquals(helloWorld,testOut.toString());
     }
 
+    @Test
     public void testApp() {
-
         App app = new App();
-        assertNotNull(app);
+        Assert.assertNotNull(app);
+    }
+
+    @After
+    public void restoreSystemOutput() {
+        System.setOut(systemOut);
     }
 }
