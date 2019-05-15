@@ -1,3 +1,10 @@
 language: java
 before_install:
-- echo -e "Salut je m'appelle Thomas"
+- echo "Salut je m'appelle Thomas"
+addons:
+  sonarcloud:
+    organization: "wathis-github"
+    token:
+      secure: "0976e4c28853c12f2368054ce60866ed49a8ac7a"
+script:
+  - sonar-scanner
