@@ -1,6 +1,6 @@
 language: java
 before_install:
-- echo "Salut je m'appelle Thomas"
+  - mvn package
 addons:
   sonarcloud:
     organization: "wathis-github"
